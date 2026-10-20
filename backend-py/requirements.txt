@@ -1,0 +1,33 @@
+# 乒乓球装备推荐系统 — Python 后端（FastAPI 版）
+# 对齐原 Java Spring Boot 后端的能力边界
+
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+
+# 数据库与 ORM
+SQLAlchemy==2.0.36
+PyMySQL==1.1.1
+cryptography==44.0.0
+
+# 数据校验与配置
+pydantic==2.10.4
+pydantic-settings==2.7.0
+
+# 安全
+PyJWT==2.10.1
+bcrypt==4.2.1
+
+# 缓存
+redis==5.2.1
+
+# 文件处理
+# 说明：未引入 Pillow —— 验证码用纯 SVG 渲染，图片上传仅做落盘与后缀/体积校验
+python-multipart==0.0.20
+aiofiles==24.1.0
+
+# 定时任务
+APScheduler==3.11.0
+
+# 测试（用例为同步风格，无需 pytest-asyncio）
+pytest==8.3.4
+httpx==0.28.1

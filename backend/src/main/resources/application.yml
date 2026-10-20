@@ -1,0 +1,131 @@
+server:
+  port: ${SERVER_PORT:8081}
+  servlet:
+    context-path: /api
+  encoding:
+    charset: UTF-8
+    enabled: true
+    force: true
+
+spring:
+  application:
+    name: pingpong-recommendation
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${DB_HOST:127.0.0.1}:${DB_PORT:3306}/${DB_NAME:pingpong_recommendation}?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: ${DB_USER:root}
+    password: ${DB_PASSWORD:}
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+
+  redis:
+    host: ${REDIS_HOST:localhost}
+    port: ${REDIS_PORT:6379}
+    password: ${REDIS_PASSWORD:}
+    database: ${REDIS_DB:0}
+    enabled: ${REDIS_ENABLED:true}
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        min-idle: 0
+        max-wait: -1ms
+
+  cache:
+    type: redis
+    redis:
+      time-to-live: 3600000
+      cache-null-values: false
+
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 10MB
+
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: Asia/Shanghai
+    serialization:
+      write-dates-as-timestamps: false
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  type-aliases-package: com.pingpong.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    # 调试时可打开 SQL 控制台日志：
+    # log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: auto
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+
+# JWT 配置
+jwt:
+  # 请务必通过环境变量 JWT_SECRET 覆盖，且与 Python 侧保持同一密钥才能跨语言互认
+  secret: ${JWT_SECRET:dev-only-secret-change-me}
+  expire-time: 86400
+  header: Authorization
+  prefix: Bearer
+
+# 接口限流
+security:
+  rate-limit:
+    enabled: true
+    window-seconds: 60
+    max-requests: 120
+    sensitive-window-seconds: 60
+    sensitive-max-requests: 12
+
+# 日志配置
+logging:
+  level:
+    root: INFO
+    com.pingpong: ${LOG_LEVEL:DEBUG}
+    com.pingpong.mapper: ${LOG_LEVEL:DEBUG}
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{50} - %msg%n"
+
+# 文件上传（相对路径，基准为后端工作目录 backend/）
+upload:
+  path: ${UPLOAD_PATH:./uploads/}
+  max-size: 5242880
+
+# 推荐系统配置
+recommend:
+  hot:
+    count: 10
+    view-threshold: 100
+  personal:
+    count: 20
+    behavior-weight:
+      browse: 1
+      favorite: 3
+      comment: 5
+      purchase: 10
+  similar:
+    count: 5
+    tag-weight: 0.6
+    category-weight: 0.3
+    price-weight: 0.1
+
+# AI 顾问（DeepSeek）：未配置 api-key 时返回兜底文案
+ai:
+  deepseek:
+    enabled: ${DEEPSEEK_ENABLED:true}
+    base-url: https://api.deepseek.com
+    chat-path: /chat/completions
+    api-key: ${DEEPSEEK_API_KEY:}
+    model: ${DEEPSEEK_MODEL:deepseek-chat}
+    temperature: 0.6
+    max-output-tokens: 900
+    timeout-millis: 90000
+    context-message-limit: 8
+    catalog-limit: 4

@@ -1,0 +1,40 @@
+CREATE TABLE IF NOT EXISTS `ai_chat_session` (
+  `id` BIGINT PRIMARY KEY AUTO_INCREMENT COMMENT '会话 ID',
+  `user_id` BIGINT NOT NULL COMMENT '用户 ID',
+  `title` VARCHAR(100) NOT NULL COMMENT '会话标题',
+  `scene` VARCHAR(50) NOT NULL DEFAULT 'EQUIPMENT_ADVISOR' COMMENT '会话场景',
+  `last_message_preview` VARCHAR(255) NULL COMMENT '最近一条消息预览',
+  `message_count` INT NOT NULL DEFAULT 0 COMMENT '消息数量',
+  `last_message_at` DATETIME NULL COMMENT '最近消息时间',
+  `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `deleted` TINYINT NOT NULL DEFAULT 0 COMMENT '逻辑删除',
+  INDEX `idx_ai_chat_session_user_id` (`user_id`),
+  INDEX `idx_ai_chat_session_last_message_at` (`last_message_at`),
+  INDEX `idx_ai_chat_session_create_time` (`create_time`),
+  INDEX `idx_ai_chat_session_deleted` (`deleted`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='AI 聊天会话表';
+
+CREATE TABLE IF NOT EXISTS `ai_chat_message` (
+  `id` BIGINT PRIMARY KEY AUTO_INCREMENT COMMENT '消息 ID',
+  `session_id` BIGINT NOT NULL COMMENT '会话 ID',
+  `user_id` BIGINT NOT NULL COMMENT '用户 ID',
+  `role` VARCHAR(20) NOT NULL COMMENT '消息角色 user/assistant',
+  `content` TEXT NOT NULL COMMENT '消息内容',
+  `status` VARCHAR(20) NOT NULL DEFAULT 'SUCCESS' COMMENT '消息状态',
+  `model` VARCHAR(100) NULL COMMENT '模型名称',
+  `finish_reason` VARCHAR(50) NULL COMMENT '结束原因',
+  `prompt_tokens` INT NULL COMMENT '提示 token 数',
+  `completion_tokens` INT NULL COMMENT '回复 token 数',
+  `total_tokens` INT NULL COMMENT '总 token 数',
+  `related_equipment_ids` VARCHAR(255) NULL COMMENT '关联装备 ID 列表',
+  `error_message` VARCHAR(255) NULL COMMENT '失败原因',
+  `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `deleted` TINYINT NOT NULL DEFAULT 0 COMMENT '逻辑删除',
+  INDEX `idx_ai_chat_message_session_id` (`session_id`),
+  INDEX `idx_ai_chat_message_user_id` (`user_id`),
+  INDEX `idx_ai_chat_message_role` (`role`),
+  INDEX `idx_ai_chat_message_create_time` (`create_time`),
+  INDEX `idx_ai_chat_message_deleted` (`deleted`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='AI 聊天消息表';

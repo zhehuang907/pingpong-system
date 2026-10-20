@@ -1,0 +1,27 @@
+{
+  "name": "pingpong-recommendation-frontend",
+  "version": "1.0.0",
+  "description": "乒乓球装备推荐系统前端",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^2.1.0",
+    "axios": "^1.5.0",
+    "dayjs": "^1.11.10",
+    "echarts": "^5.4.3",
+    "element-plus": "^2.3.14",
+    "nprogress": "^0.2.0",
+    "pinia": "^2.1.6",
+    "vue": "^3.3.4",
+    "vue-router": "^4.2.4"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.3.4",
+    "playwright": "^1.58.2",
+    "sass": "^1.66.1",
+    "vite": "^4.4.9"
+  }
+}

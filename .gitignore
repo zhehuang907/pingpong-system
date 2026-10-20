@@ -1,0 +1,72 @@
+# ============================================================
+#  乒乓球装备推荐系统 — 版本库忽略规则
+# ============================================================
+
+# ---------------- 构建产物 / 依赖（体积过大，不入库） ----------------
+target/
+build/
+dist/
+node_modules/
+.m2/
+tools/
+*.zip
+*.class
+*.jar
+*.war
+*.ear
+
+# ---------------- 运行期数据 ----------------
+logs/
+*.log
+backend/uploads/*
+!backend/uploads/.gitkeep
+backend/temp/
+backend/test-data/
+
+# 前端构建产物被拷贝给后端托管，属生成物，不入库
+backend/src/main/resources/static/
+
+# 本机一次性脚本（生成哈希 / 拼 SQL 用的临时 Java 文件，含硬编码开发口令）
+backend/scripts/
+
+# ---------------- Python ----------------
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+env/
+
+# ---------------- 本机专用配置（含机器路径 / 凭据） ----------------
+backend/local-settings.xml
+.env
+.env.*
+!.env.example
+
+# ---------------- IDE / 编辑器 ----------------
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+.project
+.classpath
+.settings/
+.workbuddy/
+
+# ---------------- 私有数据与非公开材料 ----------------
+database/backups/
+database/temp/
+database/test-data/
+毕设材料/
+docs/简历文案.md
+
+# ---------------- 操作系统 / 调试残留 ----------------
+.DS_Store
+Thumbs.db
+desktop.ini
+*-debug.png
+*-white-screen-debug.png
+vite-dev.log
+vite-start.log
+vite-start.err.log

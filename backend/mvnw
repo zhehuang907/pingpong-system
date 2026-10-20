@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+BASEDIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+MVN_CMD="$BASEDIR/tools/apache-maven-3.9.9/bin/mvn"
+
+if [ -x "$MVN_CMD" ]; then
+  exec "$MVN_CMD" "$@"
+fi
+
+if command -v mvn >/dev/null 2>&1; then
+  exec mvn "$@"
+fi
+
+echo "Maven not found. Expected bundled Maven at $MVN_CMD or a global mvn command."
+exit 1
