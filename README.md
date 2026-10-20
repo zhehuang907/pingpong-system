@@ -149,6 +149,7 @@ pingpong-recommendation-system/
 │   ├── migrations/          # 23 个按日期排序的历史变更脚本
 │   └── scripts/             # 管理员账号等一次性运维脚本（哈希改为占位符）
 │
+├── start-mysql.ps1          # Windows 下启动本机 MySQL 服务的便捷脚本
 ├── .github/                 # CI、Issue / PR 模板
 ├── CONTRIBUTING.md
 ├── LICENSE
